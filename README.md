@@ -5,7 +5,7 @@
 **BlogPlatform API** is a Spring Boot RESTful application for managing blog posts and users.  
 It allows creating, reading, updating, and deleting posts, managing users, and handling authentication with JWT.
 
-This project is **primarily a demonstration** of technologies and best practices in Java backend development rather than a complex business logic system.
+This project is **primarily a demonstration** of technologies and my best practices in Java backend development rather than a complex business logic system.
 
 Key features include:  
 
@@ -21,8 +21,8 @@ Key features include:
 ## Technologies & Tools
 
 **Programming Languages:** Java, SQL  
-**Frameworks & Libraries:** Spring Boot, Spring Data JPA, Spring Security, Hibernate, Jakarta Validation, Lombok  
-**Databases:** H2 (for testing), MySQL (configurable)  
+**Frameworks & Libraries:** Spring Boot, Spring MVC, Spring Data JPA, Spring Security, Spring Testing, Hibernate, Jakarta Validation  
+**Databases:** MySQL (configurable), H2 (for testing)  
 **Web Development:** REST API  
 **Other Tools & Technologies:** Git, Maven, JWT, Mockito, JUnit 5
 
@@ -84,75 +84,43 @@ Key features include:
 
 ## Example Usage
 
-**Register a new user:**
-```http
+**Register a new user:** 
 POST /auth/register
 {
   "username": "marko",
   "email": "marko@post.com",
-  "password": "password123",
-  "role": "ROLE_USER"
-}
-````
+  "password": "password123" 
+} 
 
 **Login and receive JWT:**
-
-```http
+ 
 POST /auth/login
 {
   "username": "marko",
   "password": "password123"
-}
-```
+} 
 
 **Create a post:**
-
-```http
-POST /posts
-Authorization: Bearer <JWT_TOKEN>
+ 
+POST /posts 
 {
   "title": "My First Post",
   "content": "This is the content of my first post"
 } 
-
-**Get all posts:**
  
-GET /posts
-
-
-**Update a post (only author or admin):**
-
-
-PUT /posts/1
-Authorization: Bearer <JWT_TOKEN>
-{
-  "title": "Updated Title",
-  "content": "Updated content"
-}
-
-
-**Delete a post (only author or admin):**
-
-
-DELETE /posts/1
-Authorization: Bearer <JWT_TOKEN>
-
 
 <br><br>
 
 ## Why This Project Stands Out
 
-* Demonstrates **modern Java backend stack**: Spring Boot, JPA, Spring Security, JWT.
+* Demonstrates **modern Java backend stack**: Spring Boot, MVC, JPA, Security, Testing, JWT.
 * **Layered architecture**: Controller → Service → Repository.
 * **DTO-based API** ensures clean, safe responses.
 * **Role-based access control** for secure endpoints.
 * **Unit and integration tests** covering main functionality.
-* **Professional error handling** with clear HTTP status codes.
-* **Focus on demonstrating technology skills**, suitable for portfolios and interviews.
+* **Professional error handling** with clear HTTP status codes. 
 <br><br>
 
 ## Notes
-
-* This project is **for demonstration purposes only**.
-* The business logic is intentionally simple to showcase usage of technologies such as Spring Boot, JWT, DTOs, validation, exception handling, and testing.
-* It can be used as a reference or a starting point for learning or portfolio presentation. 
+ 
+* The business logic is intentionally simple to showcase usage of technologies such as Spring Boot, JWT, DTOs, validation, exception handling, and testing. 
