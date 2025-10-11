@@ -21,9 +21,10 @@ Key features include:
 ## Technologies & Tools
 
 **Programming Languages:** Java, SQL  
-**Frameworks & Libraries:** Spring Boot, Spring MVC, Spring Data JPA, Spring Security, Spring Testing, Hibernate, Jakarta Validation  
+**Frameworks & Libraries:** Spring Boot, MVC, Data JPA, Security, Testing, Hibernate, Jakarta Validation  
 **Databases:** MySQL (configurable), H2 (for testing)  
 **Web Development:** REST API  
+**API Documentation:** Swagger / OpenAPI for interactive API documentation
 **Other Tools & Technologies:** Git, Maven, JWT, Mockito, JUnit 5
 
 <br><br>
@@ -52,6 +53,12 @@ Key features include:
 - Comprehensive unit and integration tests using Mockito and JUnit 5.  
 - Mocked security context for testing authenticated requests.
 
+### API Documentation
+- Integrated Swagger / OpenAPI for interactive API exploration.  
+- Auto-generated documentation of all endpoints, request/response DTOs, and status codes.  
+- Easy testing of endpoints directly via Swagger UI.
+
+  
 <br><br>
 
 ## API Endpoints
@@ -79,19 +86,9 @@ Key features include:
 - **Repository Layer:** Spring Data JPA repositories with standard CRUD operations.  
 - **Security:** JWT + Spring Security for authentication, role-based authorization, and secure password storage.  
 - **Testing:** MockMvc for controller tests, Mockito for service layer, H2 in-memory database for repository tests.  
+  
 
-
-
-<br><br>
-
-## Why This Project Stands Out
-
-* Demonstrates **modern Java backend stack**: Spring Boot, MVC, JPA, Security, Testing, JWT.
-* **Layered architecture**: Controller → Service → Repository.
-* **DTO-based API** ensures clean, safe responses.
-* **Role-based access control** for secure endpoints.
-* **Unit and integration tests** covering main functionality.
-* **Professional error handling** with clear HTTP status codes. 
+* 
 <br><br>
 
 ## Notes
