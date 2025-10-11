@@ -80,34 +80,7 @@ Key features include:
 - **Security:** JWT + Spring Security for authentication, role-based authorization, and secure password storage.  
 - **Testing:** MockMvc for controller tests, Mockito for service layer, H2 in-memory database for repository tests.  
 
-<br><br>
 
-## Example Usage
-
-**Register a new user:** 
-POST /auth/register
-{
-  "username": "marko",
-  "email": "marko@post.com",
-  "password": "password123" 
-} 
-
-**Login and receive JWT:**
- 
-POST /auth/login
-{
-  "username": "marko",
-  "password": "password123"
-} 
-
-**Create a post:**
- 
-POST /posts 
-{
-  "title": "My First Post",
-  "content": "This is the content of my first post"
-} 
- 
 
 <br><br>
 
