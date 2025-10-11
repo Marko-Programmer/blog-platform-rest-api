@@ -88,7 +88,7 @@ Key features include:
 - **Testing:** MockMvc for controller tests, Mockito for service layer, H2 in-memory database for repository tests.  
   
 
-* 
+
 <br><br>
 
 ## Notes
