@@ -46,6 +46,36 @@ public class AdminController {
 
 
 
+    @Operation(
+            summary = "Get user by id",
+            description = "Retrieves a registered user by id. Available only for users with ADMIN role.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully retrieved user by id",
+                            content = @Content(schema = @Schema(implementation = User.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Access denied — only admins can access this resource",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "User not found",
+                            content = @Content
+                    )
+            }
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/users/{userId}")
+    public User getUserById(@PathVariable Long userId) {
+        return adminService.getUserById(userId);
+    }
+
+
+
+
 
     @Operation(
             summary = "Delete user by ID",

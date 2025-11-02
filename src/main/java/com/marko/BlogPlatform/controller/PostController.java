@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +80,7 @@ public class PostController {
             }
     )
     @PostMapping
-    public ResponseEntity<Post> addPost(@RequestBody PostCreateDTO postCreateDTO) {
+    public ResponseEntity<Post> addPost(@Valid @RequestBody PostCreateDTO postCreateDTO) {
         Post createdPost = postService.addPost(postCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
     }
@@ -106,7 +107,7 @@ public class PostController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody PostCreateDTO postCreateDTO) throws AccessDeniedException {
+    public ResponseEntity<Post> updatePost(@PathVariable Long id, @Valid @RequestBody PostCreateDTO postCreateDTO) throws AccessDeniedException {
         Post updated = postService.updatePost(id, postCreateDTO);
         return ResponseEntity.ok(updated);
     }

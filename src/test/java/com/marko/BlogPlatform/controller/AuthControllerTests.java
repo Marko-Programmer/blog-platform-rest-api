@@ -35,8 +35,8 @@ public class AuthControllerTests {
 
     @Test
     public void register_returnsOk() throws Exception {
-        UserCreateDTO userCreateDTO = new UserCreateDTO("username", "email", "password", Role.ROLE_USER);
-        UserResponseDTO userResponseDTO = new UserResponseDTO(1L, "username", "email", Role.ROLE_USER);
+        UserCreateDTO userCreateDTO = new UserCreateDTO("John Doe", "john@post.com", "12345678", Role.ROLE_USER);
+        UserResponseDTO userResponseDTO = new UserResponseDTO(1L, "John Doe", "john@post.com", Role.ROLE_USER);
 
         when(userService.register(any(UserCreateDTO.class))).thenReturn(userResponseDTO);
 
@@ -46,9 +46,23 @@ public class AuthControllerTests {
                         .content(objectMapper.writeValueAsString(userCreateDTO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.username").value("username"))
-                .andExpect(jsonPath("$.email").value("email"));
+                .andExpect(jsonPath("$.username").value("John Doe"))
+                .andExpect(jsonPath("$.email").value("john@post.com"));
     }
+
+    @Test
+    public void register_withBlankFields_returnsBadRequest() throws Exception {
+        UserCreateDTO invalidUser = new UserCreateDTO("", "john@post.com", "12345678", Role.ROLE_USER);
+
+        mockMvc.perform(post("/auth/register")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(invalidUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message")
+                        .value(org.hamcrest.Matchers.containsString("Username is required")));
+    }
+
+
 
     @Test
     public void verify_returnsOk() throws Exception {
@@ -65,7 +79,16 @@ public class AuthControllerTests {
                 .andExpect(content().string(token));
     }
 
+    @Test
+    public void verify_withEmptyFields_returnsBadRequest() throws Exception {
+        LoginRequestDTO invalidLogin = new LoginRequestDTO("", "12345678");
 
-
+        mockMvc.perform(post("/auth/login")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(invalidLogin)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message")
+                        .value(org.hamcrest.Matchers.containsString("Username is required")));
+    }
 
 }

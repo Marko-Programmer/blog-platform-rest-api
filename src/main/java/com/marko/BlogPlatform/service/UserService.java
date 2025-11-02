@@ -6,6 +6,8 @@ import com.marko.BlogPlatform.dto.UserResponseDTO;
 import com.marko.BlogPlatform.model.Role;
 import com.marko.BlogPlatform.model.User;
 import com.marko.BlogPlatform.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +27,7 @@ public class UserService {
     @Autowired
     private JWTService jwtService;
 
+    private Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -43,6 +46,8 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
+        logger.info("New user registered: {}", savedUser);
+
         return new UserResponseDTO(
                 savedUser.getId(),
                 savedUser.getUsername(),
@@ -57,8 +62,10 @@ public class UserService {
                 (loginRequestDTO.getUsername(), loginRequestDTO.getPassword()));
 
         if (auth.isAuthenticated()) {
+            logger.info("User {} logged in", loginRequestDTO.getUsername());
             return jwtService.generateToken(loginRequestDTO.getUsername());
         }
+        logger.warn("Failed login attempt for user {}", loginRequestDTO.getUsername());
         return "Wrong Credentials";
     }
 

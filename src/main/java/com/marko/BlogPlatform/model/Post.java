@@ -3,6 +3,7 @@ package com.marko.BlogPlatform.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public class Post {
 
     @Column(nullable = false)
     @Schema(description = "Title of the post", example = "My First Blog Post")
+    @NotBlank(message = "Title is required")
     private String title;
 
     @Column(nullable = false)

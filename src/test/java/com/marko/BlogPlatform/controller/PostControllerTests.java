@@ -54,6 +54,8 @@ class PostControllerTests {
     }
 
 
+
+
     @Test
     public void getPostById_returnsPost() throws Exception {
         post.setId(1L);
@@ -80,6 +82,8 @@ class PostControllerTests {
     }
 
 
+
+
     @Test
     public void addPost_returnsPost() throws Exception {
         when(postService.addPost(postCreateDTO)).thenReturn(post);
@@ -89,6 +93,22 @@ class PostControllerTests {
                         .content(objectMapper.writeValueAsString(postCreateDTO)))
                 .andExpect(status().isCreated());
     }
+
+    @Test
+    public void addPost_invalidInput_returnsBadRequest() throws Exception {
+        PostCreateDTO invalidDTO = new PostCreateDTO();
+        postCreateDTO.setTitle("");
+        postCreateDTO.setContent("");
+
+        mockMvc.perform(post("/posts")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation failed"))
+                .andExpect(jsonPath("$.message").exists());
+    }
+
+
 
 
     @Test
@@ -100,6 +120,21 @@ class PostControllerTests {
                         .content(objectMapper.writeValueAsString(postCreateDTO)))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void updatePost_invalidInput_returnsBadRequest() throws Exception {
+        PostCreateDTO invalidDTO = new PostCreateDTO();
+        postCreateDTO.setTitle("");
+        postCreateDTO.setContent("");
+
+        mockMvc.perform(put("/posts/{id}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidDTO)))
+                .andExpect(status().isBadRequest());
+    }
+
+
+
 
 
     @Test public void deletePost_returnsPost() throws Exception {

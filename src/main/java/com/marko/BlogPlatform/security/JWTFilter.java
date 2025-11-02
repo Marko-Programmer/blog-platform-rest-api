@@ -7,6 +7,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +28,8 @@ public class JWTFilter extends OncePerRequestFilter {
 
     @Autowired
     private ApplicationContext context;
+
+    private Logger logger = LoggerFactory.getLogger(JWTFilter.class);
 
 
     @Override
@@ -47,6 +51,9 @@ public class JWTFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                logger.info("JWT token validated successfully for user: {}", username);
+            } else {
+                logger.warn("JWT token validation failed for user: {}", username);
             }
         }
         filterChain.doFilter(request, response);

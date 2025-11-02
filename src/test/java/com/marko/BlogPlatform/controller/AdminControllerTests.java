@@ -60,6 +60,31 @@ public class AdminControllerTests {
     }
 
 
+    @Test
+    public void  getUserById_asAdmin_returnsUser() throws Exception {
+        User admin = new User("admin", "1234", "admin@post.com", Role.ROLE_ADMIN);
+        User user = new User("user1", "1234", "user1@post.com", Role.ROLE_USER);
+
+        when(adminService.getUserById(2L)).thenReturn(
+                new User("user1", "1234", "user1@post.com", Role.ROLE_USER));
+
+        UserPrincipals adminPrincipals = new UserPrincipals(admin);
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(adminPrincipals, null, adminPrincipals.getAuthorities())
+        );
+
+        mockMvc.perform(get("/admin/users/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username").value("user1"));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    public void  getUserById_asUser_returnsForbidden() throws Exception {
+        mockMvc.perform(get("/admin/users/1"))
+                .andExpect(status().isForbidden());
+    }
+
 
     @Test
     @WithMockUser(roles = "ADMIN")

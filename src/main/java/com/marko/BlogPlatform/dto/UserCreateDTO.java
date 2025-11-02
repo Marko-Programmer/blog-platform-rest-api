@@ -1,5 +1,6 @@
 package com.marko.BlogPlatform.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,21 +12,24 @@ public class UserCreateDTO {
 
     @Schema(description = "User username", example = "John Doe")
     @NotBlank(message = "Username is required")
+    @JsonProperty("username")
     private String username;
 
 
     @Schema(description = "User email", example = "john@post.com")
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
+    @JsonProperty("email")
     private String email;
 
     @Schema(description = "User password", example = "12345678")
     @NotBlank(message = "Password is required")
+    @JsonProperty("password")
     private String password;
 
     @Schema(description = "Role of the user", example = "USER")
+    @JsonProperty("role")
     private Role role;
-
 
     public UserCreateDTO() { }
 

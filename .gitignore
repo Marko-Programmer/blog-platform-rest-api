@@ -6,6 +6,8 @@ target/
 
 TS BlogPlatform (Spring Security).txt
 application.properties
+logs/
+*.log
 
 ### STS ###
 .apt_generated

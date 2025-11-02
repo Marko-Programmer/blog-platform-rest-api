@@ -1,5 +1,7 @@
 package com.marko.BlogPlatform.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDeniedException;
@@ -7,65 +9,57 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 
-    // Обробка ресурсів, яких немає (пости, юзери)
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleNotFound(ResourceNotFoundException ex) {
-        return buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    public ResponseEntity<ApiError> handleResourceNotFound(ResourceNotFoundException e) {
+        logger.error("Exception occurred", e);
+        ApiError error = new ApiError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "Resource not found", e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-
-    // Обробка помилок валідації DTO
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
-        List<Map<String, String>> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(error -> Map.of(
-                        "field", error.getField(),
-                        "message", error.getDefaultMessage()
-                ))
-                .collect(Collectors.toList());
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("error", "Validation failed");
-        body.put("errors", errors);
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
-    }
-
-
-    // Обробка всіх інших помилок
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Map<String, Object>> handleRuntime(RuntimeException ex) {
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
-    }
 
     @ExceptionHandler(CustomAccessDeniedException.class)
-    public ResponseEntity<Map<String, Object>> handleAccessDenied(CustomAccessDeniedException ex) {
-        return buildErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
+    public ResponseEntity<ApiError> handleCustomAccessDeniedException(CustomAccessDeniedException e) {
+        logger.error("Exception occurred", e);
+        ApiError error = new ApiError(LocalDateTime.now(), HttpStatus.FORBIDDEN.value(), "Access denied!", e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
+
 
     @ExceptionHandler(AuthorizationDeniedException.class)
-    public ResponseEntity<Map<String, Object>> handleAuthorizationDenied(AuthorizationDeniedException ex) {
-        return buildErrorResponse(HttpStatus.FORBIDDEN, "Access Denied");
+    public ResponseEntity<ApiError> handleAuthorizationDenied(AuthorizationDeniedException e) {
+        logger.error("Exception occurred", e);
+        ApiError error = new ApiError(LocalDateTime.now(), HttpStatus.FORBIDDEN.value(), "Access denied!", e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
-    // Універсальний метод побудови відповіді
-    private ResponseEntity<Map<String, Object>> buildErrorResponse(HttpStatus status, String message) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("status", status.value());
-        body.put("error", status.getReasonPhrase());
-        body.put("message", message);
-        return ResponseEntity.status(status).body(body);
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError> handleValidationErrors(MethodArgumentNotValidException e) {
+        logger.error("Exception occurred", e);
+        String message = e.getBindingResult().getFieldErrors().stream()
+                .map(err -> err.getField() + ": " + err.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+        ApiError error = new ApiError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                "Validation failed", message);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleGeneralException(Exception e) {
+        logger.error("Exception occurred", e);
+        ApiError error = new ApiError(LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Unexpected error", e.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+
+
