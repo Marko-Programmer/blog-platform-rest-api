@@ -70,6 +70,7 @@ Key features include:
 | POST   | /auth/login | Authenticate user and return JWT | JSON LoginRequestDTO |
 | GET    | /users/me | Get current logged-in user | - |
 | GET    | /admin/users | Get all users (Admin only) | - |
+| GET    | /admin/users/{id} | Get user by id (Admin only) |  Path: user id|
 | DELETE | /admin/users/{id} | Delete user by id (Admin only) | Path: user id |
 | GET    | /posts | Get list of posts | - |
 | GET    | /posts/{id} | Get post by id | Path: post id |
