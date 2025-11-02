@@ -12,8 +12,9 @@ Key features include:
 - CRUD operations for posts and users.  
 - JWT-based authentication and authorization.  
 - Role-based access control (Admin vs User).  
-- DTO-based API responses for safe and clean data transfer.  
-- Global exception handling with meaningful HTTP status codes.  
+- DTO-based API responses for safe and clean data transfer.   
+- Global exception handling with meaningful HTTP status codes and structured error responses.  
+- Logging of key application events and actions for better traceability and debugging.
 - Unit and integration tests covering controllers, services, and repositories.
 
 <br><br>
@@ -80,10 +81,10 @@ Key features include:
 
 ## Architecture & Design
 
-- **DTOs:** Ensure API responses are clean and secure.  
+- **Architecture:** Clean layered design (Controller → Service → Repository) with DTO-based data flow.  
 - **Validation:** Input validation via `@Valid` and Jakarta Validation annotations.  
-- **Error Handling:** Global `@ControllerAdvice` handles exceptions with proper HTTP status codes (400, 401, 403, 404).  
-- **Repository Layer:** Spring Data JPA repositories with standard CRUD operations.  
+- **Error Handling:** Global `@ControllerAdvice` handles exceptions with proper HTTP status codes (400, 401, 403, 404).
+- **Logging:** SLF4J with Logback for structured and colorized logs. Includes info and warning logs for key service actions and user interactions.
 - **Security:** JWT + Spring Security for authentication, role-based authorization, and secure password storage.  
 - **Testing:** MockMvc for controller tests, Mockito for service layer, H2 in-memory database for repository tests.  
   
@@ -93,4 +94,4 @@ Key features include:
 
 ## Notes
  
-* The business logic is intentionally simple to showcase usage of technologies such as Spring Boot, JWT, DTOs, validation, exception handling, and testing. 
+* The business logic is intentionally simple to demonstrate the use of technologies such as Spring Boot, JWT, DTOs, validation, logging, exception handling, API documentation, and testing.
