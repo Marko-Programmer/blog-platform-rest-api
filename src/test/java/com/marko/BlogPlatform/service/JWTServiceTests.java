@@ -1,5 +1,6 @@
 package com.marko.BlogPlatform.service;
 
+import com.marko.BlogPlatform.security.JWTService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,9 +23,8 @@ public class JWTServiceTests {
 
     @BeforeEach
     public void setUp() {
-        jwtService.secretKey = "c2VjcmV0MTIzNDU2Nzg5MGFiY2RlZmdoaWprbG1ub3BxcnN0";
-        jwtService.jwtExpiration = 360000;
-
+        jwtService.setSecretKey("c2VjcmV0MTIzNDU2Nzg5MGFiY2RlZmdoaWprbG1ub3BxcnN0");
+        jwtService.setJwtExpiration(360000);
     }
 
 
@@ -71,7 +71,7 @@ public class JWTServiceTests {
 
     @Test
     public void validateToken_returnsFalse_forExpiredToken() throws InterruptedException {
-        jwtService.jwtExpiration = 1;
+        jwtService.setJwtExpiration(1);
         String username = "user1";
         UserDetails userDetails = User.withUsername(username).password("pass").roles("USER").build();
 

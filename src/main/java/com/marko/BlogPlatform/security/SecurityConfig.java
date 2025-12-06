@@ -1,6 +1,5 @@
 package com.marko.BlogPlatform.security;
 
-import com.marko.BlogPlatform.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

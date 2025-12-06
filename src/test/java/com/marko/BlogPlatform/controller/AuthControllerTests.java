@@ -2,11 +2,11 @@ package com.marko.BlogPlatform.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marko.BlogPlatform.dto.LoginRequestDTO;
-import com.marko.BlogPlatform.dto.UserCreateDTO;
-import com.marko.BlogPlatform.dto.UserResponseDTO;
+import com.marko.BlogPlatform.dto.user.LoginRequestDTO;
+import com.marko.BlogPlatform.dto.user.UserCreateDTO;
+import com.marko.BlogPlatform.dto.user.UserResponseDTO;
 import com.marko.BlogPlatform.model.Role;
-import com.marko.BlogPlatform.service.UserService;
+import com.marko.BlogPlatform.service.User.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

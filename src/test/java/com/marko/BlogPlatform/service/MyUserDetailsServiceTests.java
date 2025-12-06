@@ -3,6 +3,7 @@ package com.marko.BlogPlatform.service;
 import com.marko.BlogPlatform.model.Role;
 import com.marko.BlogPlatform.model.User;
 import com.marko.BlogPlatform.repository.UserRepository;
+import com.marko.BlogPlatform.security.MyUserDetailsService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

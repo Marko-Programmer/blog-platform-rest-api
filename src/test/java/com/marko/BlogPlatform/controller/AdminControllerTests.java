@@ -1,19 +1,15 @@
 package com.marko.BlogPlatform.controller;
 
+import com.marko.BlogPlatform.dto.user.UserResponseDTO;
 import com.marko.BlogPlatform.model.Role;
-import com.marko.BlogPlatform.model.User;
-import com.marko.BlogPlatform.model.UserPrincipals;
-import com.marko.BlogPlatform.service.AdminService;
+import com.marko.BlogPlatform.service.admin.AdminService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.Arrays;
 
 import static org.mockito.Mockito.doNothing;
@@ -34,16 +30,12 @@ public class AdminControllerTests {
     private AdminService adminService;
 
     @Test
-    public void  getAllUsers_asAdmin_returnsUsers() throws Exception {
-        User admin = new User("admin", "1234", "admin@post.com", Role.ROLE_ADMIN);
-        User user1 = new User("user1", "1234", "user1@post.com", Role.ROLE_USER);
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void getAllUsers_asAdmin_returnsUsers() throws Exception {
+        UserResponseDTO admin = new UserResponseDTO(1L, "admin", "admin@post.com", Role.ROLE_ADMIN);
+        UserResponseDTO user1 = new UserResponseDTO(2L, "user1", "user1@post.com", Role.ROLE_USER);
 
         when(adminService.getAllUsers()).thenReturn(Arrays.asList(admin, user1));
-
-        UserPrincipals adminPrincipals = new UserPrincipals(admin);
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(adminPrincipals, null, adminPrincipals.getAuthorities())
-        );
 
         mockMvc.perform(get("/admin/users"))
                 .andExpect(status().isOk())
@@ -54,40 +46,34 @@ public class AdminControllerTests {
 
     @Test
     @WithMockUser(roles = "USER")
-    public void  getAllUsers_asUser_returnsForbidden() throws Exception {
+    public void getAllUsers_asUser_returnsForbidden() throws Exception {
         mockMvc.perform(get("/admin/users"))
                 .andExpect(status().isForbidden());
     }
 
-
     @Test
-    public void  getUserById_asAdmin_returnsUser() throws Exception {
-        User admin = new User("admin", "1234", "admin@post.com", Role.ROLE_ADMIN);
-        User user = new User("user1", "1234", "user1@post.com", Role.ROLE_USER);
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    public void getUserById_asAdmin_returnsUser() throws Exception {
+        UserResponseDTO user = new UserResponseDTO(2L, "user1", "user1@post.com", Role.ROLE_USER);
 
-        when(adminService.getUserById(2L)).thenReturn(
-                new User("user1", "1234", "user1@post.com", Role.ROLE_USER));
-
-        UserPrincipals adminPrincipals = new UserPrincipals(admin);
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(adminPrincipals, null, adminPrincipals.getAuthorities())
-        );
+        when(adminService.getUserById(2L)).thenReturn(user);
 
         mockMvc.perform(get("/admin/users/2"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("user1"));
+                .andExpect(jsonPath("$.username").value("user1"))
+                .andExpect(jsonPath("$.email").value("user1@post.com"))
+                .andExpect(jsonPath("$.role").value("ROLE_USER"));
     }
 
     @Test
     @WithMockUser(roles = "USER")
-    public void  getUserById_asUser_returnsForbidden() throws Exception {
-        mockMvc.perform(get("/admin/users/1"))
+    public void getUserById_asUser_returnsForbidden() throws Exception {
+        mockMvc.perform(get("/admin/users/2"))
                 .andExpect(status().isForbidden());
     }
 
-
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(username = "admin", roles = "ADMIN")
     public void deleteUser_asAdmin_returnsNoContent() throws Exception {
         doNothing().when(adminService).deleteUser(1L);
 
@@ -95,17 +81,10 @@ public class AdminControllerTests {
                 .andExpect(status().isNoContent());
     }
 
-
     @Test
     @WithMockUser(roles = "USER")
-    public void  deleteUser_asUser_returnsForbidden() throws Exception {
+    public void deleteUser_asUser_returnsForbidden() throws Exception {
         mockMvc.perform(delete("/admin/users/{id}", 1L))
                 .andExpect(status().isForbidden());
     }
-
-
-
-
-
-
 }

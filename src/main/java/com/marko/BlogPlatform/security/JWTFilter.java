@@ -1,8 +1,6 @@
 package com.marko.BlogPlatform.security;
 
 
-import com.marko.BlogPlatform.service.JWTService;
-import com.marko.BlogPlatform.service.MyUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -17,7 +17,7 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Blog Platform API")
                         .description("REST API for managing blog posts and users")
-                        .version("1.0.0")
+                        .version("1.0.1")
                         .contact(new Contact()
                                 .name("Marko Zhenchuk")
                                 .url("https://github.com/Marko-Programmer")))

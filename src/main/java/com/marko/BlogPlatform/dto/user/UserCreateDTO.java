@@ -1,4 +1,4 @@
-package com.marko.BlogPlatform.dto;
+package com.marko.BlogPlatform.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,4 +1,4 @@
-package com.marko.BlogPlatform.service;
+package com.marko.BlogPlatform.security;
 
 import com.marko.BlogPlatform.exception.ResourceNotFoundException;
 import com.marko.BlogPlatform.model.User;

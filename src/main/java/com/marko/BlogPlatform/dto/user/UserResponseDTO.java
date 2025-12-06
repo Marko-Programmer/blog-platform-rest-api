@@ -1,4 +1,4 @@
-package com.marko.BlogPlatform.dto;
+package com.marko.BlogPlatform.dto.user;
 
 import com.marko.BlogPlatform.model.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,7 +19,7 @@ public class UserResponseDTO {
     private Role role;
 
 
-    public UserResponseDTO() {
+    public UserResponseDTO(int i, String user1, String number, String mail, Role roleUser) {
     }
 
     public UserResponseDTO(Long id, String username, String email, Role role) {

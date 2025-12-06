@@ -1,8 +1,8 @@
 package com.marko.BlogPlatform.controller;
 
-import com.marko.BlogPlatform.dto.PostCreateDTO;
-import com.marko.BlogPlatform.model.Post;
-import com.marko.BlogPlatform.service.PostService;
+import com.marko.BlogPlatform.dto.post.PostCreateDTO;
+import com.marko.BlogPlatform.dto.post.PostResponseDTO;
+import com.marko.BlogPlatform.service.Post.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,13 +32,13 @@ public class PostController {
                     @ApiResponse(
                             responseCode = "200",
                             description = "Successfully retrieved list of posts",
-                            content = @Content(schema = @Schema(implementation = Post.class))
+                            content = @Content(schema = @Schema(implementation = PostResponseDTO.class))
                     )
             }
     )
     @GetMapping
-    public List<Post> getPosts() {
-        return postService.getPosts();
+    public ResponseEntity<List<PostResponseDTO>> getPosts() {
+        return ResponseEntity.ok(postService.getPosts());
     }
 
     @Operation(
@@ -48,7 +48,7 @@ public class PostController {
                     @ApiResponse(
                             responseCode = "200",
                             description = "Post found",
-                            content = @Content(schema = @Schema(implementation = Post.class))
+                            content = @Content(schema = @Schema(implementation = PostResponseDTO.class))
                     ),
                     @ApiResponse(
                             responseCode = "404",
@@ -58,8 +58,8 @@ public class PostController {
             }
     )
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
-        Post post = postService.getPostById(id);
+    public ResponseEntity<PostResponseDTO> getPostById(@PathVariable Long id) {
+        PostResponseDTO post = postService.getPostById(id);
         return ResponseEntity.ok(post);
     }
 
@@ -70,7 +70,7 @@ public class PostController {
                     @ApiResponse(
                             responseCode = "201",
                             description = "Post successfully created",
-                            content = @Content(schema = @Schema(implementation = Post.class))
+                            content = @Content(schema = @Schema(implementation = PostResponseDTO.class))
                     ),
                     @ApiResponse(
                             responseCode = "400",
@@ -80,10 +80,11 @@ public class PostController {
             }
     )
     @PostMapping
-    public ResponseEntity<Post> addPost(@Valid @RequestBody PostCreateDTO postCreateDTO) {
-        Post createdPost = postService.addPost(postCreateDTO);
+    public ResponseEntity<PostResponseDTO> addPost(@RequestBody @Valid PostCreateDTO postCreateDTO) {
+        PostResponseDTO createdPost = postService.addPost(postCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
     }
+
 
     @Operation(
             summary = "Update an existing post",
@@ -92,7 +93,7 @@ public class PostController {
                     @ApiResponse(
                             responseCode = "200",
                             description = "Post successfully updated",
-                            content = @Content(schema = @Schema(implementation = Post.class))
+                            content = @Content(schema = @Schema(implementation = PostResponseDTO.class))
                     ),
                     @ApiResponse(
                             responseCode = "403",
@@ -107,8 +108,8 @@ public class PostController {
             }
     )
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, @Valid @RequestBody PostCreateDTO postCreateDTO) throws AccessDeniedException {
-        Post updated = postService.updatePost(id, postCreateDTO);
+    public ResponseEntity<PostResponseDTO> updatePost(@PathVariable Long id, @Valid @RequestBody PostCreateDTO postCreateDTO) throws AccessDeniedException {
+        PostResponseDTO updated = postService.updatePost(id, postCreateDTO);
         return ResponseEntity.ok(updated);
     }
 

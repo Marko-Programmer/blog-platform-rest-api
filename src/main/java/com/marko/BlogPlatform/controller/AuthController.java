@@ -1,9 +1,9 @@
 package com.marko.BlogPlatform.controller;
 
-import com.marko.BlogPlatform.dto.LoginRequestDTO;
-import com.marko.BlogPlatform.dto.UserCreateDTO;
-import com.marko.BlogPlatform.dto.UserResponseDTO;
-import com.marko.BlogPlatform.service.UserService;
+import com.marko.BlogPlatform.dto.user.LoginRequestDTO;
+import com.marko.BlogPlatform.dto.user.UserCreateDTO;
+import com.marko.BlogPlatform.dto.user.UserResponseDTO;
+import com.marko.BlogPlatform.service.User.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -82,8 +82,8 @@ public class AuthController {
             }
     )
     @PostMapping("/login")
-    public String verify(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<String> verify(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
         logger.info("Login attempt by user: {}", loginRequestDTO.getUsername());
-        return userService.verify(loginRequestDTO);
+        return ResponseEntity.ok(userService.verify(loginRequestDTO));
     }
 }

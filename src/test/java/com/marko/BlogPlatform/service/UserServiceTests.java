@@ -1,12 +1,14 @@
 package com.marko.BlogPlatform.service;
 
 
-import com.marko.BlogPlatform.dto.LoginRequestDTO;
-import com.marko.BlogPlatform.dto.UserCreateDTO;
-import com.marko.BlogPlatform.dto.UserResponseDTO;
+import com.marko.BlogPlatform.dto.user.LoginRequestDTO;
+import com.marko.BlogPlatform.dto.user.UserCreateDTO;
+import com.marko.BlogPlatform.dto.user.UserResponseDTO;
 import com.marko.BlogPlatform.model.Role;
 import com.marko.BlogPlatform.model.User;
 import com.marko.BlogPlatform.repository.UserRepository;
+import com.marko.BlogPlatform.security.JWTService;
+import com.marko.BlogPlatform.service.User.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +38,7 @@ public class UserServiceTests {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userService;
 
 
 
