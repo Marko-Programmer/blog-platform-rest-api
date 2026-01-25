@@ -1,4 +1,4 @@
-package com.marko.BlogPlatform.service.Post;
+package com.marko.BlogPlatform.service.post;
 
 import com.marko.BlogPlatform.dto.post.PostCreateDTO;
 import com.marko.BlogPlatform.dto.post.PostResponseDTO;

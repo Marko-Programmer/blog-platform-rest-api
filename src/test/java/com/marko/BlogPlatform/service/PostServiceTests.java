@@ -10,7 +10,7 @@ import com.marko.BlogPlatform.model.User;
 import com.marko.BlogPlatform.repository.PostRepository;
 import com.marko.BlogPlatform.security.PostPermissionValidator;
 import com.marko.BlogPlatform.security.SecurityUtil;
-import com.marko.BlogPlatform.service.Post.PostServiceImpl;
+import com.marko.BlogPlatform.service.post.PostServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

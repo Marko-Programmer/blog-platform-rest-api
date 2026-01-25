@@ -6,7 +6,7 @@ import com.marko.BlogPlatform.dto.user.LoginRequestDTO;
 import com.marko.BlogPlatform.dto.user.UserCreateDTO;
 import com.marko.BlogPlatform.dto.user.UserResponseDTO;
 import com.marko.BlogPlatform.model.Role;
-import com.marko.BlogPlatform.service.User.UserService;
+import com.marko.BlogPlatform.service.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

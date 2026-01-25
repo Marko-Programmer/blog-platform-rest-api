@@ -8,7 +8,7 @@ import com.marko.BlogPlatform.model.Role;
 import com.marko.BlogPlatform.model.User;
 import com.marko.BlogPlatform.repository.UserRepository;
 import com.marko.BlogPlatform.security.JWTService;
-import com.marko.BlogPlatform.service.User.UserServiceImpl;
+import com.marko.BlogPlatform.service.user.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -5,7 +5,10 @@ target/
 !**/src/test/**/target/
 
 TS BlogPlatform (Spring Security).txt
-application.properties
+src/main/resources/application.properties
+src/main/resources/application-docker.properties
+src/main/resources/application-local.properties
+src/main/resources/application-test.properties
 logs/
 *.log
 

@@ -5,7 +5,7 @@ import com.marko.BlogPlatform.dto.post.PostCreateDTO;
 import com.marko.BlogPlatform.dto.post.PostResponseDTO;
 import com.marko.BlogPlatform.model.Role;
 import com.marko.BlogPlatform.model.User;
-import com.marko.BlogPlatform.service.Post.PostService;
+import com.marko.BlogPlatform.service.post.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.marko.BlogPlatform.controller;
 
 import com.marko.BlogPlatform.dto.post.PostCreateDTO;
 import com.marko.BlogPlatform.dto.post.PostResponseDTO;
-import com.marko.BlogPlatform.service.Post.PostService;
+import com.marko.BlogPlatform.service.post.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

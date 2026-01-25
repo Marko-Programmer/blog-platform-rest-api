@@ -19,7 +19,7 @@ public class UserResponseDTO {
     private Role role;
 
 
-    public UserResponseDTO(int i, String user1, String number, String mail, Role roleUser) {
+    public UserResponseDTO() {
     }
 
     public UserResponseDTO(Long id, String username, String email, Role role) {

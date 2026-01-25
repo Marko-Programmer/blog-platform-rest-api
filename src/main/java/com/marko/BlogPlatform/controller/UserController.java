@@ -2,7 +2,7 @@ package com.marko.BlogPlatform.controller;
 
 import com.marko.BlogPlatform.dto.user.UserResponseDTO;
 import com.marko.BlogPlatform.model.UserPrincipals;
-import com.marko.BlogPlatform.service.User.UserService;
+import com.marko.BlogPlatform.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

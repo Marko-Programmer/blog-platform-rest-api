@@ -1,4 +1,4 @@
-package com.marko.BlogPlatform.service.User;
+package com.marko.BlogPlatform.service.user;
 
 import com.marko.BlogPlatform.dto.user.LoginRequestDTO;
 import com.marko.BlogPlatform.dto.user.UserCreateDTO;
