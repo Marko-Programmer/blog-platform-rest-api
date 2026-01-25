@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
             logger.info("User {} logged in", loginRequestDTO.getUsername());
             return jwtService.generateToken(loginRequestDTO.getUsername());
         }
+
         logger.warn("Failed login attempt for user {}", loginRequestDTO.getUsername());
         return "Wrong Credentials";
     }
