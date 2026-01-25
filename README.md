@@ -15,7 +15,7 @@ Key features include:
 - DTO-based API responses for safe and clean data transfer.   
 - Global exception handling with meaningful HTTP status codes and structured error responses.  
 - Logging of key application events and actions for better traceability and debugging.
-- Unit and integration tests covering controllers, services, and repositories.
+- Unit and Integration tests covering controllers, services, and repositories.
 
 <br><br>
 
@@ -26,7 +26,7 @@ Key features include:
 **Databases:** MySQL (configurable), H2 (for testing)  
 **Web Development:** REST API  
 **API Documentation:** Swagger / OpenAPI for interactive API documentation
-**Other Tools & Technologies:** Git, Maven, JWT, Mockito, JUnit 5
+**Other Tools & Technologies:** Git, Maven, Docker, Docker Compose, JWT, Mockito, JUnit 5    
 
 <br><br>
 
@@ -87,8 +87,44 @@ Key features include:
 - **Error Handling:** Global `@ControllerAdvice` handles exceptions with proper HTTP status codes (400, 401, 403, 404).
 - **Logging:** SLF4J with Logback for structured and colorized logs. Includes info and warning logs for key service actions and user interactions.
 - **Security:** JWT + Spring Security for authentication, role-based authorization, and secure password storage.  
-- **Testing:** MockMvc for controller tests, Mockito for service layer, H2 in-memory database for repository tests.  
+- **Testing:** MockMvc for controller tests, Mockito for service layer, H2 in-memory database with test profile for integration and repository tests.
+
+
+<br><br>
+
+
+
+  ## Running the Application
+
+The application can be run locally using Spring profiles or via Docker.
+
+- Local run: `mvn spring-boot:run`
+- Docker: `docker-compose up`
+
+<br><br>
+
+
+
+## Configuration 
+
+The application uses environment-based configuration with Spring profiles.
+
+- ```application.properties```
   
+```properties
+spring.application.name=BlogPlatform
+spring.profiles.active=local
+
+jwt.secret=${JWT_SECRET}
+jwt.expiration=3600000
+```
+
+  **Profile-specific configuration files**
+- ```application-local.properties```
+- ```application-docker.properties```
+- ```application-test.properties```
+
+Each profile should contain its own database configuration and environment-specific settings.
 
 
 <br><br>
