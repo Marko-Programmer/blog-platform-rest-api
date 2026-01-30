@@ -9,9 +9,14 @@ import com.marko.BlogPlatform.model.User;
 import com.marko.BlogPlatform.repository.PostRepository;
 import com.marko.BlogPlatform.security.PostPermissionValidator;
 import com.marko.BlogPlatform.security.SecurityUtil;
+import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
@@ -28,13 +33,14 @@ public class PostServiceImpl  implements  PostService {
 
     private Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
+
+    @Cacheable(value = "posts", key = "'all'")
     public List<PostResponseDTO> getPosts() {
         return PostMapper.toDTO(postRepository.findAll());
     }
 
 
-
-
+    @Cacheable(value = "post", key = "#id")
     public PostResponseDTO getPostById(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No Post found with id: " + id));
@@ -42,6 +48,10 @@ public class PostServiceImpl  implements  PostService {
     }
 
 
+    @Caching(
+            put = { @CachePut(value = "post", key = "#result.id") },
+            evict = { @CacheEvict(value = "posts", key = "'all'") }
+    )
     public PostResponseDTO addPost(PostCreateDTO postCreateDTO) {
         User author = SecurityUtil.getCurrentUser();
 
@@ -54,6 +64,10 @@ public class PostServiceImpl  implements  PostService {
     }
 
 
+    @Caching(
+            put = { @CachePut(value = "post", key = "#result.id") },
+            evict = { @CacheEvict(value = "posts", key = "'all'") }
+    )
     public PostResponseDTO updatePost(Long id, PostCreateDTO postCreateDTO) throws AccessDeniedException {
 
         Post oldPost = postRepository.findById(id)
@@ -73,6 +87,13 @@ public class PostServiceImpl  implements  PostService {
     }
 
 
+
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "post", key = "#id"),
+                    @CacheEvict(value = "posts", key = "'all'")
+            }
+    )
     public void deletePost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No Post found with id: " + id));
