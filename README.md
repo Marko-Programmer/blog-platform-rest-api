@@ -26,7 +26,8 @@ Key features include:
 **Databases:** MySQL (configurable), H2 (for testing)  
 **Web Development:** REST API  
 **API Documentation:** Swagger / OpenAPI for interactive API documentation
-**Other Tools & Technologies:** Git, Maven, Docker, Docker Compose, JWT, Mockito, JUnit 5    
+
+**Other Tools & Technologies:** Git, Maven, Docker, Docker Compose, JWT, Redis caching, Mockito, JUnit 5    
 
 <br><br>
 
@@ -123,12 +124,11 @@ jwt.expiration=3600000
 - ```application-local.properties```
 - ```application-docker.properties```
 - ```application-test.properties```
-
-Each profile should contain its own database configuration and environment-specific settings.
-
+ 
+Each profile should contain its own database configuration and environment-specific settings, including Redis host and port.
 
 <br><br>
 
 ## Notes
- 
-* The business logic is intentionally simple to demonstrate the use of technologies such as Spring Boot, JWT, DTOs, validation, logging, exception handling, API documentation, and testing.
+
+* The business logic is intentionally simple to demonstrate the use of technologies such as Spring Boot, JWT, DTOs, validation, logging, exception handling, API documentation, testing, and Redis caching for posts.
